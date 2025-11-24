@@ -1,3 +1,4 @@
+#include <chrono>
 #include <iostream>
 #include <vector>
 #include <cstdlib>
@@ -32,6 +33,57 @@ void display_radiology(int& n, vector<int>& radiologyID) {
         cout << "RD" << setw(7) << setfill('0') << radiologyID[i] << endl;
     }
 }
+
+void merge ( vector<int>& arr, int first, int mid, int last) {
+    vector<int> temp (last -first +1);
+    int first1 = first ;
+    int last1 = mid;
+    int first2 = mid + 1 ;
+    int last2 = last;
+    int index = 0;
+
+    while(first1 <= last1 && first2 <= last2 ) {
+        if (arr[first1] <= arr[first2]) {
+            temp[index ++] = arr[first1 ++];
+        }else {
+            temp[index ++] = arr[first2 ++];
+        }
+
+    }
+    while (first1 <= last1) {
+        temp[index ++] = arr[first1 ++];
+    }
+    while (first2 <= last2) {
+        temp[index ++] = arr[first2 ++];
+    }
+    for ( int i = 0 ; i < index ; i++ ) {
+        arr[first + i] = temp[i];
+    }
+
+
+}
+
+void mergeSort( vector<int>& arr, int first, int last) {
+    if (first < last) {
+        int mid = (first + last) / 2;
+        mergeSort(arr, first, mid);
+        mergeSort(arr, mid + 1, last);
+        merge(arr, first, mid, last);
+    }
+}
+
+void display_sorted_pharmacy(int& n, vector<int>& pharmacyID) {
+    for (int i = 0; i < n; i++) {
+        cout <<"PT"<< setw(7) << setfill('0')<<pharmacyID[i] <<endl;
+    }
+}
+
+void display_sorted_radiology(int& n, vector<int>& radiologyID) {
+    for (int i = 0; i < n; i++) {
+        cout <<"RD"<< setw(7) << setfill('0')<< radiologyID[i] <<endl;
+    }
+}
+
 
 void menu() {
 
@@ -77,11 +129,29 @@ int main() {
             display_radiology(n, radiologyID);
         }
         else if (choice == 4) {
-            cout << "Exiting...\n";
-            return 0;
+            clock_t before = clock();
+            mergeSort(pharmacyID, 0, n-1);
+            clock_t duration  = clock() - before;
+            cout << fixed << setprecision(6);
+            cout << "Pharmacy Records Sorted "<<endl;
+            cout <<"Duration: " << (float)duration / CLOCKS_PER_SEC << "seconds " <<endl;
         }
-        else {
-            cout << "invalid choice";
+        else if (choice == 5) {
+            clock_t before = clock();
+            mergeSort(radiologyID, 0, n-1);
+            cout << fixed << setprecision(6);
+            clock_t duration = clock() - before;
+            cout << "Radiology Records Sorted "<<endl;
+            cout << "Duration: " << (float)duration / CLOCKS_PER_SEC << "seconds " <<endl;
+        }
+        else if (choice == 6) {
+            display_sorted_pharmacy(n , pharmacyID);
+        }
+        else if (choice == 7) {
+            display_sorted_radiology(n, radiologyID);
+        }
+        else if (choice == 8) {
+            return 0;
         }
     }
 
