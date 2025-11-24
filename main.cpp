@@ -100,6 +100,16 @@ void menu() {
     cout << "10. Exit" << endl;
 }
 
+void merge_to_master(vector<int>& ph, vector<int>& rd, vector<string>& master) {
+    int i = 0, j = 0;
+    int n1 = ph.size();
+
+
+
+}
+
+
+
 int main() {
     srand(time(0));
 
@@ -154,7 +164,6 @@ int main() {
             return 0;
         }
     }
-
 
 
     return 0;
