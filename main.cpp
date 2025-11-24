@@ -2,28 +2,30 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 using namespace std;
 
 void generate_pharmacy(int& n, vector<int>& randomNumbers) {
-    cout << "enter the value to generate pharmacy " << endl;
-    cin >> n;
-    srand(time(0));
     for (int i = 0; i < n; i++) {
-        int temp = rand() % 9999999;
+        int temp = rand() % 10000000;
         randomNumbers.push_back(temp);
     }
 }
 
 void display_pharmacy(int& n, vector<int>& randomNumbers) {
     for (int i = 0; i < n; i++) {
-        cout << "PT"<<randomNumbers[i] << endl;
+        cout << "PT" << setw(7) << setfill('0') << randomNumbers[i] << endl;
     }
 }
 
 
 int main() {
+    srand(time(0));
+
     int n;
     vector<int> randomNumbers;
+    cout << "Please enter the value to generate IDs "<<endl;
+    cin >> n;
     generate_pharmacy(n, randomNumbers);
     display_pharmacy(n, randomNumbers);
 
