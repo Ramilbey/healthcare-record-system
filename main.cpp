@@ -9,8 +9,14 @@ void generate_pharmacy(int& n, vector<int>& randomNumbers) {
     cin >> n;
     srand(time(0));
     for (int i = 0; i < n; i++) {
-        int temp = rand() % 10000;
+        int temp = rand() % 9999999;
         randomNumbers.push_back(temp);
+    }
+}
+
+void show_pharmacy(int& n, vector<int>& randomNumbers) {
+    for (int i = 0; i < n; i++) {
+        cout << "PT"<<randomNumbers[i] << endl;
     }
 }
 
@@ -19,10 +25,7 @@ int main() {
     int n;
     vector<int> randomNumbers;
     generate_pharmacy(n, randomNumbers);
-    cout << "show pharmacy records" << endl;
-    for (int i = 0; i < n; i++) {
-        cout << randomNumbers[i] << endl;
-    }
+    show_pharmacy(n, randomNumbers);
 
     // cout<< "Menu"<< endl;
     // cout << "generate records"<< endl;
