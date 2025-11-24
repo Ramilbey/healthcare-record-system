@@ -14,7 +14,7 @@ void generate_pharmacy(int& n, vector<int>& randomNumbers) {
     }
 }
 
-void show_pharmacy(int& n, vector<int>& randomNumbers) {
+void display_pharmacy(int& n, vector<int>& randomNumbers) {
     for (int i = 0; i < n; i++) {
         cout << "PT"<<randomNumbers[i] << endl;
     }
@@ -25,7 +25,7 @@ int main() {
     int n;
     vector<int> randomNumbers;
     generate_pharmacy(n, randomNumbers);
-    show_pharmacy(n, randomNumbers);
+    display_pharmacy(n, randomNumbers);
 
     // cout<< "Menu"<< endl;
     // cout << "generate records"<< endl;
