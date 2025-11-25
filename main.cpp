@@ -97,24 +97,41 @@ void merge_to_master(vector<int>& ph, vector<int>& rd, vector<string>& master) {
     int n1 = ph.size();
     int n2 = rd.size();
 
+    int last_added = -1;  // track last numeric ID to avoid duplicates
+
     while (i < n1 && j < n2) {
         if (ph[i] < rd[j]) {
-            master.push_back(format_record("PT", ph[i]));
+            if (ph[i] != last_added) {
+                master.push_back(format_record("PT", ph[i]));
+                last_added = ph[i];
+            }
             i++;
         } else {
-            master.push_back(format_record("RD", rd[j]));
+            if (rd[j] != last_added) {
+                master.push_back(format_record("RD", rd[j]));
+                last_added = rd[j];
+            }
             j++;
         }
     }
+
     while (i < n1) {
-        master.push_back(format_record("PT", ph[i]));
+        if (ph[i] != last_added) {
+            master.push_back(format_record("PT", ph[i]));
+            last_added = ph[i];
+        }
         i++;
     }
+
     while (j < n2) {
-        master.push_back(format_record("RD", rd[j]));
+        if (rd[j] != last_added) {
+            master.push_back(format_record("RD", rd[j]));
+            last_added = rd[j];
+        }
         j++;
     }
 }
+
 
 void display_master_list(vector<string>& master) {
     for (int i = 0; i < master.size(); i++) {
