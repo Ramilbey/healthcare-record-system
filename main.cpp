@@ -136,8 +136,6 @@ void menu() {
     cout << "10. Exit" << endl;
 }
 
-
-
 int main() {
     srand(time(0));
 
@@ -196,14 +194,11 @@ int main() {
             cout << "Master List Merged "<<endl;
             cout << "Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
         }else if (choice == 9){
-            //should display the master list
             display_master_list(master);
         }else if (choice == 10){
-            //should exit the program
             break;
         }
     }
-
 
     return 0;
 }
