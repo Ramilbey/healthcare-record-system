@@ -5,6 +5,7 @@
 #include <ctime>
 #include <iomanip>
 using namespace std;
+#include <sstream>
 
 void generate_pharmacy(int& n, vector<int>& pharmacyID) {
     pharmacyID.clear();
@@ -84,9 +85,44 @@ void display_sorted_radiology(int& n, vector<int>& radiologyID) {
     }
 }
 
+string format_record(const string& prefix, int id) {
+    stringstream ss;
+    ss << prefix << setw(7) << setfill('0') << id;
+    return ss.str();
+}
+
+void merge_to_master(vector<int>& ph, vector<int>& rd, vector<string>& master) {
+    master.clear();
+    int i = 0, j = 0;
+    int n1 = ph.size();
+    int n2 = rd.size();
+
+    while (i < n1 && j < n2) {
+        if (ph[i] < rd[j]) {
+            master.push_back(format_record("PT", ph[i]));
+            i++;
+        } else {
+            master.push_back(format_record("RD", rd[j]));
+            j++;
+        }
+    }
+    while (i < n1) {
+        master.push_back(format_record("PT", ph[i]));
+        i++;
+    }
+    while (j < n2) {
+        master.push_back(format_record("RD", rd[j]));
+        j++;
+    }
+}
+
+void display_master_list(vector<string>& master) {
+    for (int i = 0; i < master.size(); i++) {
+        cout << master[i] << endl;
+    }
+}
 
 void menu() {
-
     cout<< "\n=====Healthcare Record System=====\n"<< endl;
     cout << "1. Generate records"<< endl;
     cout << "2. Show unsorted Pharmacy records" << endl;
@@ -100,14 +136,6 @@ void menu() {
     cout << "10. Exit" << endl;
 }
 
-void merge_to_master(vector<int>& ph, vector<int>& rd, vector<string>& master) {
-    int i = 0, j = 0;
-    int n1 = ph.size();
-
-
-
-}
-
 
 
 int main() {
@@ -116,7 +144,7 @@ int main() {
     int n;
     vector<int> pharmacyID;
     vector<int> radiologyID;
-
+    vector<string> master;
 
     int choice;
     while (true) {
@@ -144,7 +172,7 @@ int main() {
             clock_t duration  = clock() - before;
             cout << fixed << setprecision(6);
             cout << "Pharmacy Records Sorted "<<endl;
-            cout <<"Duration: " << (float)duration / CLOCKS_PER_SEC << "seconds " <<endl;
+            cout <<"Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
         }
         else if (choice == 5) {
             clock_t before = clock();
@@ -152,7 +180,7 @@ int main() {
             cout << fixed << setprecision(6);
             clock_t duration = clock() - before;
             cout << "Radiology Records Sorted "<<endl;
-            cout << "Duration: " << (float)duration / CLOCKS_PER_SEC << "seconds " <<endl;
+            cout << "Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
         }
         else if (choice == 6) {
             display_sorted_pharmacy(n , pharmacyID);
@@ -161,7 +189,18 @@ int main() {
             display_sorted_radiology(n, radiologyID);
         }
         else if (choice == 8) {
-            return 0;
+            clock_t before = clock();
+            merge_to_master(pharmacyID, radiologyID, master);
+            clock_t duration = clock() - before;
+            cout << fixed << setprecision(6);
+            cout << "Master List Merged "<<endl;
+            cout << "Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
+        }else if (choice == 9){
+            //should display the master list
+            display_master_list(master);
+        }else if (choice == 10){
+            //should exit the program
+            break;
         }
     }
 
