@@ -7,6 +7,10 @@
 using namespace std;
 #include <sstream>
 
+bool isPharmacySorted = false;
+bool isRadiologySsorted = false;
+bool isMasterMerged = false;
+
 void generate_pharmacy(int& n, vector<int>& pharmacyID) {
     pharmacyID.clear();
     for (int i = 0; i < n; i++) {
@@ -182,43 +186,91 @@ int main() {
             }
         }
         else if (choice == 2) {
-            cout<< "Unsorted Records for Pharmacy "<<endl;
-            display_pharmacy(n, pharmacyID);
+            if (pharmacyID.empty()) {
+                cout<< "No records. Use option 1 first" << endl;
+            }else {
+                cout<< "Unsorted Records for Pharmacy "<<endl;
+                display_pharmacy(n, pharmacyID);
+            }
         }
         else if (choice == 3) {
-            cout<< "Unsorted Records for Radiology "<<endl;
-            display_radiology(n, radiologyID);
+            if (radiologyID.empty()) {
+                cout<< "No records. Use option 1 first" << endl;
+            }else {
+                cout<< "Unsorted Records for Radiology "<<endl;
+                display_radiology(n, radiologyID);
+            }
         }
         else if (choice == 4) {
-            clock_t before = clock();
-            mergeSort(pharmacyID, 0, n-1);
-            clock_t duration  = clock() - before;
-            cout << fixed << setprecision(6);
-            cout << "Pharmacy Records Sorted "<<endl;
-            cout <<"Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
+            if (pharmacyID.empty()) {
+                cout<< "No records. Use option 1 first" << endl;
+            }else {
+                clock_t before = clock();
+                mergeSort(pharmacyID, 0, n-1);
+                clock_t duration  = clock() - before;
+                isPharmacySorted = true;
+                cout << fixed << setprecision(6);
+                cout << "Pharmacy Records Sorted "<<endl;
+                cout <<"Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
+            }
         }
         else if (choice == 5) {
-            clock_t before = clock();
-            mergeSort(radiologyID, 0, n-1);
-            cout << fixed << setprecision(6);
-            clock_t duration = clock() - before;
-            cout << "Radiology Records Sorted "<<endl;
-            cout << "Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
+            if (radiologyID.empty()) {
+                cout<< "No records. Use option 1 first" << endl;
+            }else {
+                clock_t before = clock();
+                mergeSort(radiologyID, 0, n-1);
+                cout << fixed << setprecision(6);
+                clock_t duration = clock() - before;
+                isRadiologySsorted= true;
+                cout << "Radiology Records Sorted "<<endl;
+                cout << "Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
+            }
         }
         else if (choice == 6) {
-            display_sorted_pharmacy(n , pharmacyID);
+            if (pharmacyID.empty() ) {
+                cout<< "No records. Use option 1 first" << endl;
+            }else if (!isPharmacySorted) {
+                cout<< "Pharmacy records are unsorted. Pls use option 4 to sort"<< endl;
+            }else {
+                display_sorted_pharmacy(n , pharmacyID);
+            }
         }
         else if (choice == 7) {
-            display_sorted_radiology(n, radiologyID);
+            if (radiologyID.empty()) {
+                cout<< "No records. Use option 1 first" << endl;
+            }else if (!isRadiologySsorted) {
+                cout << "Radiology records are unsorted. Pls use option 5 to sort" << endl;
+            }else {
+                display_sorted_radiology(n, radiologyID);
+            }
         }
         else if (choice == 8) {
-            clock_t before = clock();
-            merge_to_master(pharmacyID, radiologyID, master);
-            clock_t duration = clock() - before;
-            cout << fixed << setprecision(6);
-            cout << "Master List Merged "<<endl;
-            cout << "Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
+            if (pharmacyID.empty() && radiologyID.empty()) {
+                cout<< "No records. Use option 1 first" << endl;
+            }else if (!isPharmacySorted) {
+                cout<< "Pharmacy records are unsorted. Pls use option 4 to merge into master" << endl;
+            }else if (!isRadiologySsorted) {
+                cout << "Radiology records are unsorted. Pls use option 5 to sort to merge into master" << endl;
+            }else {
+                clock_t before = clock();
+                merge_to_master(pharmacyID, radiologyID, master);
+                clock_t duration = clock() - before;
+                isMasterMerged = true;
+                cout << fixed << setprecision(6);
+                cout << "Master List Merged "<<endl;
+                cout << "Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
+            }
         }else if (choice == 9){
+            if (pharmacyID.empty() || radiologyID.empty()) {
+                cout<< "No records. Use option 1 first" << endl;
+            }else if ( !isPharmacySorted) {
+                cout <<"Pharmacy records are unsorted. Pls use option 4" << endl;
+            }else if ( !isRadiologySsorted) {
+                cout << "Radiology records are unsorted. Pls use option 5" << endl;
+            }else if (!isMasterMerged) {
+                cout << "Master records are unsorted. Pls use option 8 to display master list" << endl;
+            }
             display_master_list(master);
         }else if (choice == 10){
             break;
