@@ -108,7 +108,7 @@ void merge_to_master(vector<int>& ph, vector<int>& rd, vector<string>& master) {
             i++;
         } else {
             if (rd[j] != last_added) {
-                master.push_back(format_record("RD", rd[j]));
+                master.push_back(format_record("PT", rd[j]));
                 last_added = rd[j];
             }
             j++;
@@ -125,7 +125,7 @@ void merge_to_master(vector<int>& ph, vector<int>& rd, vector<string>& master) {
 
     while (j < n2) {
         if (rd[j] != last_added) {
-            master.push_back(format_record("RD", rd[j]));
+            master.push_back(format_record("PT", rd[j]));
             last_added = rd[j];
         }
         j++;
