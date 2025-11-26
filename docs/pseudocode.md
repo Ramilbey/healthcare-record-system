@@ -26,7 +26,7 @@ END FUNCTION
 
 FUNCTION display_radiology(n, radiologyID)
     FOR i FROM 0 TO n-1 DO
-        PRINT "RD" + FORMAT(radiologyID[i], 7 digits with leading zeros)
+        PRINT "PT" + FORMAT(radiologyID[i], 7 digits with leading zeros)
     END FOR
 END FUNCTION
 
