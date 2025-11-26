@@ -1,193 +1,281 @@
 ALGORITHM HealthcareRecordSystem
 
+// Global variables
+DECLARE pharmacy_records, radiology_records AS integer arrays
+DECLARE master_list AS string array
+DECLARE n, pharmacy_sorted, radiology_sorted, records_generated
 
-FUNCTION generate_pharmacy(n, pharmacyID)
-    CLEAR pharmacyID
+FUNCTION generate_patient_ids(n, department_array)
+    CLEAR department_array
     FOR i FROM 0 TO n-1 DO
-        temp = RANDOM_NUMBER(0 to 9999999)
-        ADD temp TO pharmacyID
+        id = RANDOM_NUMBER(0 to 9999999)  // Generates number between 0-9999999
+        ADD id TO department_array
     END FOR
 END FUNCTION
 
-FUNCTION generate_radiology(n, radiologyID)
-    CLEAR radiologyID
-    FOR i FROM 0 TO n-1 DO
-        temp = RANDOM_NUMBER(0 to 9999999)
-        ADD temp TO radiologyID
-    END FOR
+FUNCTION format_patient_id(id)
+    // Convert number to 7-digit string with leading zeros, then add "PT" prefix
+    number_str = CONVERT id TO string
+    WHILE LENGTH(number_str) < 7 DO
+        number_str = "0" + number_str
+    END WHILE
+    RETURN "PT" + number_str
 END FUNCTION
 
-FUNCTION display_pharmacy(n, pharmacyID)
-    FOR i FROM 0 TO n-1 DO
-        PRINT "PT" + FORMAT(pharmacyID[i], 7 digits with leading zeros)
-    END FOR
-END FUNCTION
-
-
-FUNCTION display_radiology(n, radiologyID)
-    FOR i FROM 0 TO n-1 DO
-        PRINT "RD" + FORMAT(radiologyID[i], 7 digits with leading zeros)
-    END FOR
-END FUNCTION
-
-
-FUNCTION merge(arr, first, mid, last)
-    CREATE temp array of size (last - first + 1)
-    first1 = first
-    last1 = mid
-    first2 = mid + 1
-    last2 = last
-    index = 0
+FUNCTION display_array(ids, is_sorted, department_name)
+    IF is_sorted THEN
+        PRINT "Sorted " + department_name + " Records:"
+    ELSE
+        PRINT "Unsorted " + department_name + " Records:"
+    END IF
     
-    WHILE first1 <= last1 AND first2 <= last2 DO
-        IF arr[first1] <= arr[first2] THEN
-            temp[index] = arr[first1]
-            INCREMENT index and first1
+    FOR i FROM 0 TO SIZE(ids)-1 DO
+        IF ids IS integer array THEN
+            PRINT format_patient_id(ids[i])
         ELSE
-            temp[index] = arr[first2]
-            INCREMENT index and first2
+            PRINT ids[i]  // Already formatted strings
         END IF
-    END WHILE
-    
-  
-    WHILE first1 <= last1 DO
-        temp[index] = arr[first1]
-        INCREMENT index and first1
-    END WHILE
-    
-    WHILE first2 <= last2 DO
-        temp[index] = arr[first2]
-        INCREMENT index and first2
-    END WHILE
-    
-    FOR i FROM 0 TO index-1 DO
-        arr[first + i] = temp[i]
     END FOR
 END FUNCTION
 
-FUNCTION mergeSort(arr, first, last)
-    IF first < last THEN
-        mid = (first + last) / 2
-        mergeSort(arr, first, mid)          // Sort left half
-        mergeSort(arr, mid + 1, last)       // Sort right half
-        merge(arr, first, mid, last)        // Merge sorted halves
+// MERGESORT IMPLEMENTATION
+FUNCTION merge(arr, left, mid, right)
+    n1 = mid - left + 1
+    n2 = right - mid
+    
+    CREATE left_arr[n1], right_arr[n2]
+    
+    // Copy data to temporary arrays
+    FOR i FROM 0 TO n1-1 DO
+        left_arr[i] = arr[left + i]
+    END FOR
+    FOR j FROM 0 TO n2-1 DO
+        right_arr[j] = arr[mid + 1 + j]
+    END FOR
+    
+    i = 0, j = 0, k = left
+    
+    // Merge the temporary arrays back
+    WHILE i < n1 AND j < n2 DO
+        IF left_arr[i] <= right_arr[j] THEN
+            arr[k] = left_arr[i]
+            i = i + 1
+        ELSE
+            arr[k] = right_arr[j]
+            j = j + 1
+        END IF
+        k = k + 1
+    END WHILE
+    
+    // Copy remaining elements from left array
+    WHILE i < n1 DO
+        arr[k] = left_arr[i]
+        i = i + 1
+        k = k + 1
+    END WHILE
+    
+    // Copy remaining elements from right array
+    WHILE j < n2 DO
+        arr[k] = right_arr[j]
+        j = j + 1
+        k = k + 1
+    END WHILE
+END FUNCTION
+
+FUNCTION mergeSort(arr, left, right)
+    IF left < right THEN
+        mid = left + (right - left) / 2  // Avoids overflow
+        
+        mergeSort(arr, left, mid)        // Sort first half
+        mergeSort(arr, mid + 1, right)   // Sort second half
+        merge(arr, left, mid, right)     // Merge sorted halves
     END IF
 END FUNCTION
 
-FUNCTION format_record(prefix, id)
-    RETURN prefix + FORMAT(id, 7 digits with leading zeros)
-END FUNCTION
-
-FUNCTION merge_to_master(ph, rd, master)
+// MERGE DEPARTMENTS WITH DUPLICATE REMOVAL
+FUNCTION merge_departments_to_master(pharmacy, radiology, master)
     CLEAR master
-    i = 0
-    j = 0
-    n1 = SIZE(ph)
-    n2 = SIZE(rd)
-    last_added = -1
+    i = 0, j = 0
+    n1 = SIZE(pharmacy), n2 = SIZE(radiology)
     
     WHILE i < n1 AND j < n2 DO
-        IF ph[i] < rd[j] THEN
-            IF ph[i] != last_added THEN
-                ADD format_record("PT", ph[i]) TO master
-                last_added = ph[i]
-            END IF
-            INCREMENT i
+        IF pharmacy[i] < radiology[j] THEN
+            ADD format_patient_id(pharmacy[i]) TO master
+            i = i + 1
+        ELSE IF radiology[j] < pharmacy[i] THEN
+            ADD format_patient_id(radiology[j]) TO master
+            j = j + 1
         ELSE
-            IF rd[j] != last_added THEN
-                ADD format_record("RD", rd[j]) TO master
-                last_added = rd[j]
-            END IF
-            INCREMENT j
+            // Equal values (duplicates) - add only once
+            ADD format_patient_id(pharmacy[i]) TO master
+            i = i + 1
+            j = j + 1
         END IF
     END WHILE
     
+    // Add remaining pharmacy elements
     WHILE i < n1 DO
-        IF ph[i] != last_added THEN
-            ADD format_record("PT", ph[i]) TO master
-            last_added = ph[i]
-        END IF
-        INCREMENT i
+        ADD format_patient_id(pharmacy[i]) TO master
+        i = i + 1
     END WHILE
     
+    // Add remaining radiology elements
     WHILE j < n2 DO
-        IF rd[j] != last_added THEN
-            ADD format_record("RD", rd[j]) TO master
-            last_added = rd[j]
-        END IF
-        INCREMENT j
+        ADD format_patient_id(radiology[j]) TO master
+        j = j + 1
     END WHILE
 END FUNCTION
 
-FUNCTION display_master_list(master)
-    FOR i FROM 0 TO SIZE(master)-1 DO
-        PRINT master[i]
+// TIMING FUNCTIONS
+FUNCTION measure_sorting_time(department_array, department_name)
+    START high_resolution_timer
+    CALL mergeSort(department_array, 0, SIZE(department_array)-1)
+    STOP timer
+    duration = CALCULATE duration in milliseconds
+    PRINT department_name + " sorting time: " + duration + " ms"
+    RETURN duration
+END FUNCTION
+
+FUNCTION measure_merge_time(pharmacy, radiology, master)
+    START high_resolution_timer
+    CALL merge_departments_to_master(pharmacy, radiology, master)
+    STOP timer
+    duration = CALCULATE duration in milliseconds
+    PRINT "Merge time: " + duration + " ms"
+    RETURN duration
+END FUNCTION
+
+// EMPIRICAL ANALYSIS FUNCTION
+FUNCTION run_empirical_analysis()
+    test_sizes = [1000, 5000, 16000, 32000, 85000, 150000, 300000, 512000, 800000, 1000000]
+    trials = 5
+    
+    PRINT "Running empirical analysis..."
+    PRINT "n, Pharmacy_Time, Radiology_Time, Merge_Time"
+    
+    FOR EACH size IN test_sizes DO
+        total_pharmacy_time = 0
+        total_radiology_time = 0
+        total_merge_time = 0
+        
+        FOR trial FROM 1 TO trials DO
+            // Generate records for this trial
+            CALL generate_patient_ids(size, pharmacy_records)
+            CALL generate_patient_ids(size, radiology_records)
+            
+            // Measure pharmacy sort time
+            START timer
+            CALL mergeSort(pharmacy_records, 0, size-1)
+            STOP timer
+            pharmacy_time = duration in ms
+            total_pharmacy_time = total_pharmacy_time + pharmacy_time
+            
+            // Measure radiology sort time
+            START timer
+            CALL mergeSort(radiology_records, 0, size-1)
+            STOP timer
+            radiology_time = duration in ms
+            total_radiology_time = total_radiology_time + radiology_time
+            
+            // Measure merge time
+            START timer
+            CALL merge_departments_to_master(pharmacy_records, radiology_records, master_list)
+            STOP timer
+            merge_time = duration in ms
+            total_merge_time = total_merge_time + merge_time
+        END FOR
+        
+        // Calculate averages
+        avg_pharmacy = total_pharmacy_time / trials
+        avg_radiology = total_radiology_time / trials
+        avg_merge = total_merge_time / trials
+        
+        PRINT size + ", " + avg_pharmacy + ", " + avg_radiology + ", " + avg_merge
     END FOR
 END FUNCTION
 
-FUNCTION menu()
+// MAIN MENU
+FUNCTION display_main_menu()
     PRINT "===== Healthcare Record System ====="
-    PRINT "1. Generate records"
+    PRINT "1. Generate and sort records"
     PRINT "2. Show unsorted Pharmacy records"
     PRINT "3. Show unsorted Radiology records"
-    PRINT "4. Sort pharmacy"
-    PRINT "5. Sort radiology"
-    PRINT "6. Show pharmacy records"
-    PRINT "7. Show radiology records"
-    PRINT "8. Merge into --> master list"
-    PRINT "9. Show master list"
-    PRINT "10. Exit"
+    PRINT "4. Show sorted Pharmacy records"
+    PRINT "5. Show sorted Radiology records"
+    PRINT "6. Merge and show master list"
+    PRINT "7. Run empirical analysis (for report)"
+    PRINT "8. Exit"
+    PRINT "Enter choice: "
 END FUNCTION
 
+// MAIN PROGRAM
 BEGIN
     SEED random number generator with current time
-    
-    DECLARE n (number of records)
-    DECLARE pharmacyID array
-    DECLARE radiologyID array
-    DECLARE master list
+    SET pharmacy_sorted = FALSE, radiology_sorted = FALSE, records_generated = FALSE
     
     WHILE TRUE DO
-        CALL menu()
+        CALL display_main_menu()
         READ choice
         
         CASE choice OF
-            1: READ n
-               CALL generate_pharmacy(n, pharmacyID)
-               CALL generate_radiology(n, radiologyID)
-               PRINT "Records generated"
+            1: PRINT "Enter number of records (max 1,000,000): "
+               READ n
+               IF n < 1 OR n > 1000000 THEN
+                   PRINT "Error: Please enter between 1 and 1,000,000 records"
+                   CONTINUE
+               END IF
                
-            2: PRINT "Unsorted Records for Pharmacy"
-               CALL display_pharmacy(n, pharmacyID)
+               // Generate records
+               CALL generate_patient_ids(n, pharmacy_records)
+               CALL generate_patient_ids(n, radiology_records)
+               SET records_generated = TRUE
                
-            3: PRINT "Unsorted Records for Radiology"
-               CALL display_radiology(n, radiologyID)
+               // Sort and measure time
+               pharmacy_time = measure_sorting_time(pharmacy_records, "Pharmacy")
+               radiology_time = measure_sorting_time(radiology_records, "Radiology")
                
-            4: START timer
-               CALL mergeSort(pharmacyID, 0, n-1)
-               STOP timer and CALCULATE duration
-               PRINT "Pharmacy Records Sorted"
-               PRINT "Duration: " + duration + " seconds"
+               SET pharmacy_sorted = TRUE, radiology_sorted = TRUE
+               PRINT "Records generated and sorted successfully!"
                
-            5: START timer
-               CALL mergeSort(radiologyID, 0, n-1)
-               STOP timer and CALCULATE duration
-               PRINT "Radiology Records Sorted"
-               PRINT "Duration: " + duration + " seconds"
+            2: IF NOT records_generated THEN
+                   PRINT "Please generate records first (Option 1)"
+               ELSE
+                   CALL display_array(pharmacy_records, FALSE, "Pharmacy")
+               END IF
                
-            6: CALL display_sorted_pharmacy(n, pharmacyID)
-            
-            7: CALL display_sorted_radiology(n, radiologyID)
-            
-            8: START timer
-               CALL merge_to_master(pharmacyID, radiologyID, master)
-               STOP timer and CALCULATE duration
-               PRINT "Master List Merged"
-               PRINT "Duration: " + duration + " seconds"
+            3: IF NOT records_generated THEN
+                   PRINT "Please generate records first (Option 1)"
+               ELSE
+                   CALL display_array(radiology_records, FALSE, "Radiology")
+               END IF
                
-            9: CALL display_master_list(master)
-            
-            10: EXIT loop
+            4: IF NOT pharmacy_sorted THEN
+                   PRINT "Please sort records first (Option 1)"
+               ELSE
+                   CALL display_array(pharmacy_records, TRUE, "Pharmacy")
+               END IF
+               
+            5: IF NOT radiology_sorted THEN
+                   PRINT "Please sort records first (Option 1)"
+               ELSE
+                   CALL display_array(radiology_records, TRUE, "Radiology")
+               END IF
+               
+            6: IF NOT pharmacy_sorted OR NOT radiology_sorted THEN
+                   PRINT "Please sort both departments first (Option 1)"
+               ELSE
+                   merge_time = measure_merge_time(pharmacy_records, radiology_records, master_list)
+                   PRINT "Merged Master List (duplicates removed):"
+                   CALL display_array(master_list, TRUE, "Master")
+               END IF
+               
+            7: CALL run_empirical_analysis()
+               
+            8: PRINT "Exiting program. Goodbye!"
+               EXIT PROGRAM
+               
+            DEFAULT: PRINT "Invalid choice. Please enter 1-8."
         END CASE
+        PRINT ""  // Empty line for readability
     END WHILE
 END
