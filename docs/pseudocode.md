@@ -95,7 +95,7 @@ FUNCTION merge_to_master(ph, rd, master)
             INCREMENT i
         ELSE
             IF rd[j] != last_added THEN
-                ADD format_record("RD", rd[j]) TO master
+                ADD format_record("PT", rd[j]) TO master
                 last_added = rd[j]
             END IF
             INCREMENT j
@@ -112,7 +112,7 @@ FUNCTION merge_to_master(ph, rd, master)
     
     WHILE j < n2 DO
         IF rd[j] != last_added THEN
-            ADD format_record("RD", rd[j]) TO master
+            ADD format_record("PT", rd[j]) TO master
             last_added = rd[j]
         END IF
         INCREMENT j
