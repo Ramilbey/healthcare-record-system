@@ -81,7 +81,7 @@ void display_sorted_pharmacy(int& n, vector<int>& pharmacyID) {
 
 void display_sorted_radiology(int& n, vector<int>& radiologyID) {
     for (int i = 0; i < n; i++) {
-        cout <<"RD"<< setw(7) << setfill('0')<< radiologyID[i] <<endl;
+        cout <<"PT"<< setw(7) << setfill('0')<< radiologyID[i] <<endl;
     }
 }
 
