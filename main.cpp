@@ -165,6 +165,11 @@ int main() {
     while (true) {
         menu();
         cin>>choice;
+        if (choice < 1 || choice > 10) {
+            cout<< "Please enter a valid choice"<< endl;
+            cin.clear();
+            continue;
+        }
         if (choice == 1) {
             cout << "Please enter the value to generate IDs "<<endl;
             cin >> n;
