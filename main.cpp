@@ -8,7 +8,7 @@ using namespace std;
 #include <sstream>
 
 bool isPharmacySorted = false;
-bool isRadiologySsorted = false;
+bool isRadiologySorted = false;
 bool isMasterMerged = false;
 
 void generate_pharmacy(int& n, vector<int>& pharmacyID) {
@@ -222,7 +222,7 @@ int main() {
                 mergeSort(radiologyID, 0, n-1);
                 cout << fixed << setprecision(6);
                 clock_t duration = clock() - before;
-                isRadiologySsorted= true;
+                isRadiologySorted= true;
                 cout << "Radiology Records Sorted "<<endl;
                 cout << "Duration: " << (float)duration / CLOCKS_PER_SEC << " seconds " <<endl;
             }
@@ -239,7 +239,7 @@ int main() {
         else if (choice == 7) {
             if (radiologyID.empty()) {
                 cout<< "No records. Use option 1 first" << endl;
-            }else if (!isRadiologySsorted) {
+            }else if (!isRadiologySorted) {
                 cout << "Radiology records are unsorted. Pls use option 5 to sort" << endl;
             }else {
                 display_sorted_radiology(n, radiologyID);
@@ -250,7 +250,7 @@ int main() {
                 cout<< "No records. Use option 1 first" << endl;
             }else if (!isPharmacySorted) {
                 cout<< "Pharmacy records are unsorted. Pls use option 4 to merge into master" << endl;
-            }else if (!isRadiologySsorted) {
+            }else if (!isRadiologySorted) {
                 cout << "Radiology records are unsorted. Pls use option 5 to sort to merge into master" << endl;
             }else {
                 clock_t before = clock();
@@ -266,12 +266,13 @@ int main() {
                 cout<< "No records. Use option 1 first" << endl;
             }else if ( !isPharmacySorted) {
                 cout <<"Pharmacy records are unsorted. Pls use option 4" << endl;
-            }else if ( !isRadiologySsorted) {
+            }else if ( !isRadiologySorted) {
                 cout << "Radiology records are unsorted. Pls use option 5" << endl;
             }else if (!isMasterMerged) {
                 cout << "Master records are unsorted. Pls use option 8 to display master list" << endl;
+            }else {
+                display_master_list(master);
             }
-            display_master_list(master);
         }else if (choice == 10){
             break;
         }
