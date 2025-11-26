@@ -168,8 +168,8 @@ int main() {
         if (choice == 1) {
             cout << "Please enter the value to generate IDs "<<endl;
             cin >> n;
-            if (n <= 0 || n >10000000) {
-                cout << "Error: please enter values between 1 and 10000000" << endl;
+            if (n <= 0 || n >1000000) {
+                cout << "Error: please enter values between 1 and 1000000" << endl;
             }else {
                 generate_pharmacy(n, pharmacyID);
                 generate_radiology(n, radiologyID);
