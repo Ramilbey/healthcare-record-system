@@ -168,10 +168,13 @@ int main() {
         if (choice == 1) {
             cout << "Please enter the value to generate IDs "<<endl;
             cin >> n;
-            generate_pharmacy(n, pharmacyID);
-            generate_radiology(n, radiologyID);
-
-            cout<<"Records generated "<<endl;
+            if (n <= 0 || n >10000000) {
+                cout << "Error: please enter values between 1 and 10000000" << endl;
+            }else {
+                generate_pharmacy(n, pharmacyID);
+                generate_radiology(n, radiologyID);
+                cout<<"Records generated "<<endl;
+            }
         }
         else if (choice == 2) {
             cout<< "Unsorted Records for Pharmacy "<<endl;
