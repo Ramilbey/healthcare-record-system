@@ -172,6 +172,7 @@ int main() {
         if (choice < 1 || choice > 10) {
             cout<< "Please enter a valid choice"<< endl;
             cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             continue;
         }
         if (choice == 1) {
