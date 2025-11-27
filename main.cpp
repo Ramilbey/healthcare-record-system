@@ -136,7 +136,6 @@ void merge_to_master(vector<int>& ph, vector<int>& rd, vector<string>& master) {
     }
 }
 
-
 void display_master_list(vector<string>& master) {
     for (int i = 0; i < master.size(); i++) {
         cout << master[i] << endl;
