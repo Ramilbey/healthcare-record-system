@@ -7,6 +7,7 @@
 using namespace std;
 #include <sstream>
 
+//declaring global variables to use for validation later in the code
 bool isPharmacySorted = false;
 bool isRadiologySorted = false;
 bool isMasterMerged = false;
@@ -168,6 +169,7 @@ int main() {
     while (true) {
         menu();
         cin>>choice;
+        //valadation for choiceses
         if (choice < 1 || choice > 10) {
             cout<< "Please enter a valid choice"<< endl;
             cin.clear();
