@@ -26,7 +26,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2bb55a09-897e-43dd-90ab-d191f8ccd60f" name="Changes" comment="idea" />
+    <list default="true" id="2bb55a09-897e-43dd-90ab-d191f8ccd60f" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -125,7 +128,7 @@
       <workItem from="1764148415940" duration="5885000" />
       <workItem from="1764228043848" duration="105000" />
       <workItem from="1764235472373" duration="1938000" />
-      <workItem from="1764344293963" duration="2484000" />
+      <workItem from="1764344293963" duration="5034000" />
     </task>
     <task id="LOCAL-00001" summary="creating menu">
       <option name="closed" value="true" />
@@ -335,7 +338,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764346881048</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="update">
+      <option name="closed" value="true" />
+      <created>1764347128970</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1764347128970</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -364,12 +375,12 @@
     <MESSAGE value="input choice validations" />
     <MESSAGE value="fix choice 9 validation" />
     <MESSAGE value="choice validation fix infiniet loop (if user enters latter infinite loop" />
-    <MESSAGE value="update" />
     <MESSAGE value="remove junk files" />
     <MESSAGE value="reinstall c++ debug files" />
     <MESSAGE value="rmeove .idea file" />
     <MESSAGE value="idea" />
-    <option name="LAST_COMMIT_MESSAGE" value="idea" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
