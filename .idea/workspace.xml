@@ -26,9 +26,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2bb55a09-897e-43dd-90ab-d191f8ccd60f" name="Changes" comment="rmeove .idea file">
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="2bb55a09-897e-43dd-90ab-d191f8ccd60f" name="Changes" comment="idea" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -127,7 +125,7 @@
       <workItem from="1764148415940" duration="5885000" />
       <workItem from="1764228043848" duration="105000" />
       <workItem from="1764235472373" duration="1938000" />
-      <workItem from="1764344293963" duration="2095000" />
+      <workItem from="1764344293963" duration="2484000" />
     </task>
     <task id="LOCAL-00001" summary="creating menu">
       <option name="closed" value="true" />
@@ -329,7 +327,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764345010727</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="idea">
+      <option name="closed" value="true" />
+      <created>1764346881048</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1764346881048</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -362,7 +368,8 @@
     <MESSAGE value="remove junk files" />
     <MESSAGE value="reinstall c++ debug files" />
     <MESSAGE value="rmeove .idea file" />
-    <option name="LAST_COMMIT_MESSAGE" value="rmeove .idea file" />
+    <MESSAGE value="idea" />
+    <option name="LAST_COMMIT_MESSAGE" value="idea" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
