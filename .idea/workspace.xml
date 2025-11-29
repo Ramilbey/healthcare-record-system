@@ -26,7 +26,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2bb55a09-897e-43dd-90ab-d191f8ccd60f" name="Changes" comment="remove unused chrone">
+    <list default="true" id="2bb55a09-897e-43dd-90ab-d191f8ccd60f" name="Changes" comment="leave unused chrone">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -99,9 +99,9 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="algorithm" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="algorithm" TARGET_NAME="algorithm" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="algorithm" RUN_TARGET_NAME="algorithm">
@@ -127,7 +127,8 @@
       <workItem from="1764148415940" duration="5885000" />
       <workItem from="1764228043848" duration="105000" />
       <workItem from="1764235472373" duration="1938000" />
-      <workItem from="1764344293963" duration="6186000" />
+      <workItem from="1764344293963" duration="6831000" />
+      <workItem from="1764399987549" duration="723000" />
     </task>
     <task id="LOCAL-00001" summary="creating menu">
       <option name="closed" value="true" />
@@ -353,7 +354,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764349538000</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="leave unused chrone">
+      <option name="closed" value="true" />
+      <created>1764359208412</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1764359208412</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -388,7 +397,8 @@
     <MESSAGE value="idea" />
     <MESSAGE value="update" />
     <MESSAGE value="remove unused chrone" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove unused chrone" />
+    <MESSAGE value="leave unused chrone" />
+    <option name="LAST_COMMIT_MESSAGE" value="leave unused chrone" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

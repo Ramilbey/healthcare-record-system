@@ -64,8 +64,6 @@ void merge ( vector<int>& arr, int first, int mid, int last) {
     for ( int i = 0 ; i < index ; i++ ) {
         arr[first + i] = temp[i];
     }
-
-
 }
 
 void mergeSort( vector<int>& arr, int first, int last) {
