@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+#include <limits>
 using namespace std;
 #include <sstream>
 
@@ -101,7 +102,8 @@ void merge_to_master(vector<int>& ph, vector<int>& rd, vector<string>& master) {
 
     int last_added = -1;  // track last numeric ID to avoid duplicates
 
-    while (i < n1 && j < n2) {
+    while (i < n1 && j < n2)
+        {
         if (ph[i] < rd[j]) {
             if (ph[i] != last_added) {
                 master.push_back(format_record("PT", ph[i]));
